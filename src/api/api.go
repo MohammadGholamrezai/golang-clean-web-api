@@ -41,4 +41,3 @@ func registerRoutes(r *gin.Engine) {
 		routers.Health(health)
 	}
 }
-

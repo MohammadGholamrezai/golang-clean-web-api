@@ -14,6 +14,7 @@ type Config struct {
 	Redis    RedisConfig
 	Cors     CorsConfig
 	Password PasswordConfig
+	Logger   LoggerConfig
 }
 
 type ServerConfig struct {
@@ -56,6 +57,13 @@ type PasswordConfig struct {
 	MaxLength        int
 	IncludeUppercase bool
 	IncludeLowercase bool
+}
+
+type LoggerConfig struct {
+	FilePath string
+	Encoding string
+	Level    string
+	Logger   string
 }
 
 func GetConfig() *Config {
