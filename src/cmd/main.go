@@ -7,6 +7,7 @@ import (
 	"github.com/MohammadGholamrezai/golang-clean-web-api/config"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/data/cache"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/data/db"
+	"github.com/MohammadGholamrezai/golang-clean-web-api/data/db/migrations"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/pkg/logging"
 )
 
@@ -27,6 +28,8 @@ func main() {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
+
+	migrations.Up_1()
 
 	api.InitServer(cfg)
 }
