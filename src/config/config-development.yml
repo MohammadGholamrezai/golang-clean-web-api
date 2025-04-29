@@ -35,5 +35,13 @@ password:
   maxLength: 64
   includeUppercase: true
   includeLowercase: true
-
+otp:
+  expireTime: 120
+  digits: 6
+  limiter: 100
+jwt:
+  secret: "your_secret_key_here"
+  refreshSecret: "your_refresh_secret_key_here"
+  accessTokenExpireDuration: 3600
+  refreshTokenExpireDuration: 7200
 

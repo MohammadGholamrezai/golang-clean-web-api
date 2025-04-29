@@ -1,9 +1,12 @@
 package common
 
 import (
+	"math"
 	"math/rand"
 	"regexp"
+	"strconv"
 	"strings"
+	"time"
 	"unicode"
 
 	"github.com/MohammadGholamrezai/golang-clean-web-api/config"
@@ -100,6 +103,17 @@ func GeneratePassword() string {
 		inRune[i], inRune[j] = inRune[j], inRune[i]
 	})
 	return string(inRune)
+}
+
+func GenerateOtp() string {
+	cfg := config.GetConfig()
+	// rand.Seed(time.Now().UnixNano())                       before go1.20
+	rand.NewSource(time.Now().UnixNano())
+	min := int(math.Pow(10, float64(cfg.Otp.Digits-1)))   // 10^ (digits - 1) = 10 ^5 = 100000 (first 6 digits number)
+	max := int(math.Pow(10, float64(cfg.Otp.Digits)) - 1) // (10^ digits) - 1 = 10 ^6 - 1 = 999999 (last 6 digits number)
+
+	var num = rand.Intn(max-min) + min
+	return strconv.Itoa(num)
 }
 
 func HasUpper(s string) bool {

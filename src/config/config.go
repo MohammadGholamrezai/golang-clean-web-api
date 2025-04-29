@@ -15,6 +15,8 @@ type Config struct {
 	Cors     CorsConfig
 	Password PasswordConfig
 	Logger   LoggerConfig
+	Otp      OtpConfig
+	JWT      JwtConfig
 }
 
 type ServerConfig struct {
@@ -64,6 +66,19 @@ type LoggerConfig struct {
 	Encoding string
 	Level    string
 	Logger   string
+}
+
+type OtpConfig struct {
+	ExpireTime time.Duration
+	Digits     int
+	Limiter    time.Duration
+}
+
+type JwtConfig struct {
+	Secret                     string
+	RefreshSecret              string
+	AccessTokenExpireDuration  time.Duration
+	RefreshTokenExpireDuration time.Duration
 }
 
 func GetConfig() *Config {
