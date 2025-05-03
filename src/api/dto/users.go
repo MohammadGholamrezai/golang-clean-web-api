@@ -7,6 +7,6 @@ type GetOtpRequest struct {
 type TokenDetail struct {
 	AccessToken            string `json:"access_token"`
 	RefreshToken           string `json:"refresh_token"`
-	AccessTokenExpireTime  int64    `json:"access_token_expire_time"`
-	RefreshTokenExpireTime int64    `json:"refresh_token_expire_time"`
+	AccessTokenExpireTime  int64  `json:"access_token_expire_time"`
+	RefreshTokenExpireTime int64  `json:"refresh_token_expire_time"`
 }

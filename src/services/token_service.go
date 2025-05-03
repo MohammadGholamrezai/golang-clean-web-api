@@ -74,7 +74,7 @@ func (t *TokenService) VerifyToken(token string) (*jwt.Token, error) {
 }
 
 func (t *TokenService) GetClaims(token string) (claimMap map[string]interface{}, err error) {
-	claimMap = map[string]interface{}{}
+	claimMap = map[string]interface{}{} // empty interface {}
 	verifyToken, err := t.VerifyToken(token)
 	if err != nil {
 		return nil, err

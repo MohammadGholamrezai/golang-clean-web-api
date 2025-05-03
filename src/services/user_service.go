@@ -4,7 +4,9 @@ import (
 	"github.com/MohammadGholamrezai/golang-clean-web-api/api/dto"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/common"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/config"
+	"github.com/MohammadGholamrezai/golang-clean-web-api/constants"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/data/db"
+	"github.com/MohammadGholamrezai/golang-clean-web-api/data/models"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/pkg/logging"
 	"gorm.io/gorm"
 )
@@ -33,4 +35,59 @@ func (s *UserService) SendOtp(req *dto.GetOtpRequest) error {
 	}
 
 	return nil
+}
+
+func (s *UserService) existsByEmail(email string) (bool, error) {
+	var exists bool
+	if err := s.database.Model(&models.User{}).
+		Select("count(*) > 0").
+		Where("email = ?", email).
+		Find(&exists).
+		Error; err != nil {
+		s.logger.Error(logging.Postgres, logging.Select, err.Error(), nil)
+		return false, err
+	}
+
+	return exists, nil
+}
+
+func (s *UserService) existsByUsername(username string) (bool, error) {
+	var exists bool
+	if err := s.database.Model(&models.User{}).
+		Select("count(*) > 0").
+		Where("username = ?", username).
+		Find(&exists).
+		Error; err != nil {
+		s.logger.Error(logging.Postgres, logging.Select, err.Error(), nil)
+		return false, err
+	}
+
+	return exists, nil
+}
+
+func (s *UserService) existsByMobileNumber(mobileNumber string) (bool, error) {
+	var exists bool
+	if err := s.database.Model(&models.User{}).
+		Select("count(*) > 0").
+		Where("mobile_number = ?", mobileNumber).
+		Find(&exists).
+		Error; err != nil {
+		s.logger.Error(logging.Postgres, logging.Select, err.Error(), nil)
+		return false, err
+	}
+
+	return exists, nil
+}
+
+func (s *UserService) getDefaultRole() (roleId int, err error) {
+	if err := s.database.Model(&models.User{}).
+		Select("id").
+		Where("name = ?", constants.DefaultRoleName).
+		Find(&roleId).
+		Error; err != nil {
+		s.logger.Error(logging.Postgres, logging.Select, err.Error(), nil)
+		return 0, err
+	}
+
+	return roleId, nil
 }
