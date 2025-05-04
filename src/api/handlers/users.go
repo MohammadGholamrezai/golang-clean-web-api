@@ -47,3 +47,54 @@ func (h *UsersHandler) SendOtp(c *gin.Context) {
 	// call sms service to send otp
 	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(nil, true, 0))
 }
+
+func (h *UsersHandler) LoginByUsername(c *gin.Context) {
+	req := new(dto.LoginByUsernameRequest)
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, -1, err))
+		return
+	}
+
+	token, err := h.service.LoginByUsername(req)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err), helper.GenerateBaseResponseWithError(err, false, -1, err))
+		return
+	}
+
+	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(token, true, 0))
+}
+
+func (h *UsersHandler) RegisterByUsername(c *gin.Context) {
+	req := new(dto.RegisterUserByUsernameRequest)
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, -1, err))
+		return
+	}
+
+	err = h.service.RegisterByUsername(req)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err), helper.GenerateBaseResponseWithError(err, false, -1, err))
+		return
+	}
+
+	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(nil, true, 0))
+}
+
+func (h *UsersHandler) RegisterLoginByMobileNumber(c *gin.Context) {
+	req := new(dto.RegisterLoginByMobileRequest)
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, -1, err))
+		return
+	}
+
+	token, err := h.service.RegisterLoginByMobileNumber(req)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err), helper.GenerateBaseResponseWithError(err, false, -1, err))
+		return
+	}
+
+	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(token, true, 0))
+}

@@ -67,19 +67,19 @@ func createDefaultInformation(database *gorm.DB) {
 }
 
 func createRoleIfNotExists(database *gorm.DB, r *models.Role) {
-	exists := 0
-
-	database.Model(&models.Role{}).Select(1).Where("name = ?", r.Name).First(&exists)
-	if exists == 0 {
+	var count int64
+	
+	database.Model(&models.Role{}).Where("name = ?", r.Name).Count(&count)
+	if count == 0 {
 		database.Create(&r)
 	}
 }
 
 func createAdminUserIfNotExists(database *gorm.DB, u *models.User, roleId int) {
-	exists := 0
+	var count int64
 
-	database.Model(&models.User{}).Select(1).Where("username = ?", u.Username).First(&exists)
-	if exists == 0 {
+	database.Model(&models.User{}).Where("username = ?", u.Username).Count(&count)
+	if count == 0 {
 		database.Create(&u)
 		ur := models.UserRole{UserId: u.Id, RoleId: roleId}
 		database.Create(&ur)
