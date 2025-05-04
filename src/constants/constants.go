@@ -9,3 +9,5 @@ const DefaultLastName string = "Rezaei"
 const DefaultMobileNumber string = "09123456789"
 
 const RedisOtpDefaultKey string = "otp"
+
+const RolesKey string = "Roles"
