@@ -1,5 +1,7 @@
 package dto
 
+//  Data Transfer Object (DTO)
+
 type GetOtpRequest struct {
 	MobileNumber string `json:"mobile_number" binding:"required,mobile,min=11,max=11"`
 }

@@ -22,6 +22,8 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 
 		auth := c.GetHeader("Authorization")
 		token := strings.Split(auth, " ")
+
+		// token[0] = "Bearer"
 		if auth == " " {
 			err = &service_errors.ServiceError{EndUserMessage: service_errors.TokenNotFound}
 		} else {
