@@ -24,6 +24,8 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 		token := strings.Split(auth, " ")
 
 		// token[0] = "Bearer"
+		// token[1] = "token"
+		
 		if auth == " " {
 			err = &service_errors.ServiceError{EndUserMessage: service_errors.TokenNotFound}
 		} else {
@@ -68,7 +70,7 @@ func Authorization(validRoles []string) gin.HandlerFunc {
 			return
 		}
 
-		// Insert roles to dictionary
+		// Insert roles to dictionary(map)
 		roles := rolesVal.([]interface{})
 		val := map[string]int{}
 		for _, item := range roles {

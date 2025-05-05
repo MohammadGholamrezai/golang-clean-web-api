@@ -16,6 +16,16 @@ type BaseModel struct {
 	CreatedBy  int            `gorm:"not null"`
 	ModifiedBy *sql.NullInt64 `gorm:"null"` // null if not modified
 	DeletedBy  *sql.NullInt64 `gorm:"null"` // null if not deleted
+
+	// All Null Types
+
+	// sql.NullTime
+	// sql.NullBool
+	// sql.NullString
+	// sql.NullInt64
+	// sql.NullFloat64
+
+	// *sql.NullInt64 means not only value could be null, but also all field could be null
 }
 
 func (m *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {

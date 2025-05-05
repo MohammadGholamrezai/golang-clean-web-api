@@ -38,10 +38,14 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 	api := r.Group("/api")
 	v1 := api.Group("/v1")
 	{
+		// middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"})
+	
 		health := v1.Group("/health")
 		users := v1.Group("/users")
+		countries := v1.Group("/countries", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
 		routers.Health(health)
 		routers.User(users, cfg)
+		routers.Country(countries, cfg)
 	}
 }
