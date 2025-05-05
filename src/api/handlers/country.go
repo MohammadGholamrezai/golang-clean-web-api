@@ -23,7 +23,7 @@ func NewCountryHandler(cfg *config.Config) *CountryHandler {
 
 func (h *CountryHandler) Create(c *gin.Context) {
 	req := dto.CreateUpdateCountryRequest{}
-	err := c.ShouldBindJSON(req)
+	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, 121, err))
 		return
@@ -42,7 +42,7 @@ func (h *CountryHandler) Update(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
 
 	req := dto.CreateUpdateCountryRequest{}
-	err := c.ShouldBindJSON(req)
+	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, 121, err))
 		return

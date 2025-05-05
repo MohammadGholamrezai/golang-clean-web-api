@@ -24,17 +24,28 @@ type BaseModel struct {
 	// sql.NullString
 	// sql.NullInt64
 	// sql.NullFloat64
-
+	
 	// *sql.NullInt64 means not only value could be null, but also all field could be null
 }
 
 func (m *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {
-	value := tx.Statement.Context.Value("UserId")
+	value := tx.Statement.Context.Value("user_id")
 	// TODO: check userId type
 	var userId = -1
-	if value != nil {
-		userId, _ = value.(int)
+
+	switch v := value.(type) {
+	case int:
+		userId = v
+	case float64:
+		userId = int(v) // برای مقادیر JSON یا JWT
+	default:
+		userId = -1 // یا یه لاگ بزن که "نوع ناشناخته"
 	}
+	
+
+	// if value != nil {
+	// 	userId, _ = value.(int)
+	// }
 
 	m.CreatedAt = time.Now().UTC()
 	m.CreatedBy = userId
@@ -42,7 +53,7 @@ func (m *BaseModel) BeforeCreate(tx *gorm.DB) (err error) {
 }
 
 func (m *BaseModel) BeforeUpdate(tx *gorm.DB) (err error) {
-	value := tx.Statement.Context.Value("UserId")
+	value := tx.Statement.Context.Value("user_id")
 
 	var userId = &sql.NullInt64{Valid: false}
 	if value != nil {
@@ -55,7 +66,7 @@ func (m *BaseModel) BeforeUpdate(tx *gorm.DB) (err error) {
 }
 
 func (m *BaseModel) BeforeDelete(tx *gorm.DB) (err error) {
-	value := tx.Statement.Context.Value("UserId")
+	value := tx.Statement.Context.Value("user_id")
 
 	var userId = &sql.NullInt64{Valid: false}
 	if value != nil {

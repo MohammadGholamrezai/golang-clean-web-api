@@ -25,8 +25,8 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 
 		// token[0] = "Bearer"
 		// token[1] = "token"
-		
-		if auth == " " {
+
+		if auth == " " || auth == "" {
 			err = &service_errors.ServiceError{EndUserMessage: service_errors.TokenNotFound}
 		} else {
 			claimMap, err = tokenService.GetClaims(token[1])

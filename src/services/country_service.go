@@ -43,9 +43,9 @@ func (s *CountryService) Create(ctx context.Context, req *dto.CreateUpdateCountr
 
 func (s *CountryService) Update(ctx context.Context, req *dto.CreateUpdateCountryRequest, id int) (*dto.CreateUpdateCountryResponse, error) {
 	updateMap := map[string]interface{}{
-		"Name":        req.Name,
-		"Modified_by": &sql.NullInt64{Int64: int64(ctx.Value("user_id").(float64)), Valid: true},
-		"Modified_at": &sql.NullTime{Valid: true, Time: time.Now().UTC()},
+		"Name":       req.Name,
+		"ModifiedBy": &sql.NullInt64{Int64: int64(ctx.Value("user_id").(float64)), Valid: true},
+		"ModifiedAt": &sql.NullTime{Valid: true, Time: time.Now().UTC()},
 	}
 
 	tx := s.database.WithContext(ctx).Begin()
@@ -78,8 +78,8 @@ func (s *CountryService) Update(ctx context.Context, req *dto.CreateUpdateCountr
 
 func (s *CountryService) Delete(ctx context.Context, id int) error {
 	updateMap := map[string]interface{}{
-		"Deleted_By": &sql.NullInt64{Int64: int64(ctx.Value("user_id").(float64)), Valid: true},
-		"Deleted_At": &sql.NullTime{Time: time.Now().UTC()},
+		"DeletedBy": &sql.NullInt64{Int64: int64(ctx.Value("user_id").(float64)), Valid: true},
+		"DeletedAt": &sql.NullTime{Time: time.Now().UTC(), Valid: true},
 	}
 
 	tx := s.database.WithContext(ctx).Begin()

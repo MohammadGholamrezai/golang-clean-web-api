@@ -29,21 +29,21 @@ func CheckPassword(password string) bool {
 		return false
 	}
 
-	if cfg.Password.IncludeChars && !HasLetter(password) {
-		return false
-	}
+	// if cfg.Password.IncludeChars && !HasLetter(password) {
+	// 	return false
+	// }
 
-	if cfg.Password.IncludeDigits && !HasDigits(password) {
-		return false
-	}
+	// if cfg.Password.IncludeDigits && !HasDigits(password) {
+	// 	return false
+	// }
 
-	if cfg.Password.IncludeLowercase && !HasLower(password) {
-		return false
-	}
+	// if cfg.Password.IncludeLowercase && !HasLower(password) {
+	// 	return false
+	// }
 
-	if cfg.Password.IncludeUppercase && !HasUpper(password) {
-		return false
-	}
+	// if cfg.Password.IncludeUppercase && !HasUpper(password) {
+	// 	return false
+	// }
 
 	return true
 }

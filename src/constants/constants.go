@@ -10,4 +10,4 @@ const DefaultMobileNumber string = "09123456789"
 
 const RedisOtpDefaultKey string = "otp"
 
-const RolesKey string = "Roles"
+const RolesKey string = "roles"

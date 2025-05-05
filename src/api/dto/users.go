@@ -27,6 +27,6 @@ type RegisterLoginByMobileRequest struct {
 }
 
 type LoginByUsernameRequest struct {
-	Username string `json:"Username" binding:"required,min=6"`
+	Username string `json:"Username" binding:"required,min=5"`
 	Password string `json:"Password" binding:"required,password,min=6"`
 }
