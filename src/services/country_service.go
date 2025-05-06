@@ -7,11 +7,10 @@ import (
 	"github.com/MohammadGholamrezai/golang-clean-web-api/config"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/data/db"
 	"github.com/MohammadGholamrezai/golang-clean-web-api/data/models"
-	"gorm.io/gorm"
 )
 
 type CountryService struct {
-	database *gorm.DB
+	// database *gorm.DB
 	// base is new for generic crud
 	base *BaseService[models.Country, dto.CreateUpdateCountryRequest, dto.CreateUpdateCountryRequest, dto.CreateUpdateCountryResponse]
 }
