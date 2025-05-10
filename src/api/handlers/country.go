@@ -90,7 +90,19 @@ func (h *CountryHandler) GetById(c *gin.Context) {
 	c.JSON(http.StatusOK, helper.GenerateBaseResponse(response, true, 0))
 }
 
-// TODO
-func (h *CountryHandler) getByFilter(c *gin.Context) {
+func (h *CountryHandler) GetByFilter(c *gin.Context) {
+	req := dto.PaginationInputWithFilter{}
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, 121, err))
+		return
+	}
 
+	response, err := h.service.GetByFilter(c, &req)
+	if err != nil {
+		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err), helper.GenerateBaseResponseWithError(nil, false, 131, err))
+		return
+	}
+
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(response, true, 0))
 }
